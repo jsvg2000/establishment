@@ -26,14 +26,11 @@ body {
 }
 
 .login-background {
-  background-image: url('../public/background.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: #E1E6F5;
 }
 
 .initial-message{
-  color: #ffffff;
+  color: #5b8ae0;
   font-weight: bold;
   padding: 15px;
   font-size: 18px;

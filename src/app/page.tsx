@@ -12,11 +12,14 @@ export default function LoginPage() {
   const login = async (FormData:any)=>{
     if(aceptado){
       startLoading()
-      await authFetch({
+      const data =await authFetch({
         endpoint:'auth/login',
         redirectRoute: '/home',
         formData:FormData
       })
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('name', data.token);
+      localStorage.setItem('roleId', data.token);
       finishLoading()
     }else{
       alert('Debes aceptar los términos y condiciones.');
@@ -35,13 +38,11 @@ export default function LoginPage() {
           <Form.Input
             label='Correo'
             name='email'
-            placeholder='Ingresa tu correo..'
             type='text'
           ></Form.Input>
           <Form.Input
             label='Contraseña'
             name='password'
-            placeholder='Ingresa tu contraeña..'
             type='password'
           ></Form.Input>
           <label>

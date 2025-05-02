@@ -4,17 +4,19 @@ import { useContext } from 'react'
 import { FormContext } from '..'
 import styles from './syles.module.scss'
 
-interface InputProps {
-  type?: 'text' | 'password' | 'number' | 'email' | 'date'
+interface SelectProps {
   name: string
   label: string
-  placeholder?: string
+  options: { 
+    value: string 
+    label: string
+  }[]
 }
 
-export function Input ({ label, name, placeholder, type }: InputProps) {
+export function Select({ label, name, options }: SelectProps) {
   const { formValues, setFormValues } = useContext(FormContext)!
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = event.target
     setFormValues(prevValues => ({
       ...prevValues,
@@ -22,20 +24,24 @@ export function Input ({ label, name, placeholder, type }: InputProps) {
     }))
   }
 
-  
   return (
     <div className={styles.inputContainer}>
-      <label className={styles.label} htmlFor={name}>
+      <label className={styles.label} >
         {label}
       </label>
-      <input
-        type={type}
+      <select
         id={name}
         name={name}
         value={formValues[name] || ''}
         onChange={handleChange}
-        placeholder={placeholder}
-      />
+      >
+        <option value="">Seleccione una opción</option>
+        {options.map(option => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
     </div>
   )
 }

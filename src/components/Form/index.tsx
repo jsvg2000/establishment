@@ -2,7 +2,7 @@
 
 import { createContext, useState } from "react"
 import style from './styles.module.scss'
-import { Input, SubmitButton } from './components'
+import { Input, SubmitButton,Select } from './components'
 
 type FormValues = Record<string, string>
 
@@ -48,3 +48,4 @@ export function Form({title,children,onSubmit, description}: FormProps){
 
 Form.Input = Input
 Form.SubmitButton = SubmitButton
+Form.Select  = Select

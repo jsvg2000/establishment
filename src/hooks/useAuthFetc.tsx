@@ -6,7 +6,7 @@ import { useContext } from 'react'
 interface AuthFetchProps {
   endpoint: string
   redirectRoute?: string
-  formData: any
+  formData?: any
   options?: AxiosRequestConfig<any>
 }
 
@@ -18,13 +18,23 @@ export function useAuthFetch () {
     endpoint,
     formData,
     redirectRoute,
-    options
+    options = {}
   }: AuthFetchProps) => {
     try {
+      const token = localStorage.getItem('token')
+
+      const config: AxiosRequestConfig = {
+        ...options,
+        headers: {
+          ...options.headers,
+          Authorization: `Bearer ${token}`
+        }
+      }
+
       const { data } = await axios.post(
         `http://localhost:3000/${endpoint}`,
         formData,
-        options
+        config
       )
 
       showNotification({
@@ -34,9 +44,10 @@ export function useAuthFetch () {
       })
 
       if (redirectRoute) router.push(redirectRoute)
+      return data
     } catch (error: any) {
       showNotification({
-        msj: error.response.data.message as string,
+        msj: error?.response?.data?.message || 'Error desconocido',
         open: true,
         status: 'error'
       })
